@@ -9,6 +9,9 @@ int main() {
     Simple* simple = new Simple();
     game->addEntity(simple);
 
+    // We give the player a dummy item
+    game->getPlayer()->getInventory()->addItem(new Item("dummy", "Dummy item", "Item created for testing purposes", "assets/dummy.png"));
+
     while(!game->shouldClose()) {
 
         game->update();

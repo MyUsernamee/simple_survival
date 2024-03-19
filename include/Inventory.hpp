@@ -5,33 +5,38 @@
 
 class Inventory {
 
-    // TODO: FIX ME, Change from item to slots and make implementation
+    // TODO: 
 
     public:
 
         Inventory(char width, char height);
+        Inventory() {}; // Classic C++
         ~Inventory();
 
-        void addItem(Item* item);
-        void clear();
+        void clear(); // TODO: Implement
 
-        Item* getItem(int index);
-        int getItemCount();
+        std::optional<Item*> getItem(int index);
+        std::optional<Item*> getItem(int x, int y);
 
-        Item* getItem(int x, int y);
-
-        Item* popItem(int index);
-        Item* popItem(int x, int y);
+        std::optional<Item*> popItem(int index);
+        std::optional<Item*> popItem(int x, int y);
 
         Slot* getSlot(int index);
         Slot* getSlot(int x, int y);
 
+        void addItem(Item* item);
+
         char getWidth() { return width; }
         char getHeight() { return height; }
 
+        void render(int x, int y, int slot_width, int slot_height);
+
     private:
 
+        int getIndex(int x, int y) { return y * width + x; }
+
         char width, height;
-        std::array<Slot*, width * height>* items;
+        int size;
+        Slot** items;
 
 };

@@ -44,10 +44,20 @@ void Player::render()
         40,
         raylib::Color(255, 0, 0, 255)); // TODO: Replace with sprite and add animation
 
+    if (IsKeyDown(KEY_E)) { // TODO: REPLACE WITH KEYMAP
+
+        // Draw inventory
+        inventory.render(position.x, position.y + 50, 16, 16);
+
+
+    }
+
 }
 
 Player::Player()
 {
+    inventory = Inventory(8, 1);
     position = raylib::Vector3(0, 0, 0);
     velocity = raylib::Vector3(0, 0, 0);
+    health = 100;
 }

@@ -8,3 +8,10 @@ void DroppedItem::update(Game *game)
 
 
 }
+
+void DroppedItem::render()
+{
+
+    DrawRectangle(position.x, position.y, 50, 50, RED);
+
+}
