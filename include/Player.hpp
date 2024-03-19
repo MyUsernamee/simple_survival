@@ -10,6 +10,10 @@
 
 const int SLOT_COUNT = 10;
 
+#include "Game.hpp"
+
+class Game; // Forward declaration
+
 class Player {
 
     // TODO: Should the player be an entity? Not too sure about this one.
@@ -20,8 +24,8 @@ class Player {
 
         Player();
 
-        void update();
-        void render(); // TODO: Render sprite, health, inventory, etc.
+        void update(Game* game);
+        void render(Game* game); // TODO: Render sprite, health, inventory, etc.
 
         raylib::Vector3 getPosition() { return position; }
         raylib::Vector3 getVelocity() { return velocity; }
@@ -29,11 +33,15 @@ class Player {
 
         Inventory* getInventory() { return &inventory; }
 
+        
+
     private:
 
         raylib::Vector3 position;
         raylib::Vector3 velocity;
         Inventory inventory;
+        Slot heldItem;
         char health;
+        bool holding_item;
 
 };

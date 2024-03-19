@@ -5,6 +5,7 @@
 #include "Item.hpp"
 
 const Color SLOT_BG_COLOR = GRAY;
+const Color SLOT_BORDER_COLOR = DARKGRAY;
 
 class Slot {
 
@@ -14,14 +15,14 @@ class Slot {
 
         Slot();
 
-        std::optional<Item*> getItem() { return item; }
+        std::optional<Item> getItem() { return item; }
         int getCount() { return count; }
 
         /**
          * @brief Set the item type of the slot.
          * 
         */
-        void setItem(std::optional<Item*> item) { this->item = item; count = 1; }
+        void setItem(std::optional<Item> item) { this->item = item; count = 1; }
 
         /**
          * @brief Set the amount of that type of item in the slot.
@@ -32,6 +33,8 @@ class Slot {
         bool add(int count); // Add items, returns false if the slot is full
         bool remove(int count); // Remove items, returns false if the slot doesn't have enough items
 
+        bool hasItem() { return item.has_value() && count > 0; }
+
         /**
          * @brief Render the slot at the given position.
          * 
@@ -41,7 +44,7 @@ class Slot {
 
     private:
 
-        std::optional<Item*> item;
+        std::optional<Item> item;
         int count;
 
 };

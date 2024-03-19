@@ -16,6 +16,8 @@ add_subdirectory(dependencies/raylib-cpp)
 include_directories(include)
 include_directories(dependencies/raylib-cpp/include)
 
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 add_executable(simple_survival ${SOURCES})
 

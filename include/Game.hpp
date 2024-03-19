@@ -12,7 +12,11 @@ class Entity; // Forward declaration
 const unsigned short MAP_WIDTH = 256;
 const unsigned char MAX_STACK_SIZE = 64;
 
+class Player; // Forward declaration
+
 class Game {
+
+    //TODO : Add Pixelate Shader
 
     public:
 
@@ -27,8 +31,8 @@ class Game {
         
         bool shouldClose(); // Returns true if the game should close
 
-        Tile* getTile(int x, int y);
-        void setTile(int x, int y, Tile* tile);
+        TileType getTile(int x, int y);
+        void setTile(int x, int y, TileType tile);
 
         void addEntity(Entity* entity) { entities.push_back(entity); }
 
@@ -46,11 +50,14 @@ class Game {
         */
         void runScript(const char* script); // TODO: Implement this
 
+        void generateWorld(); // Generates a world using tiles TODO: Implement this
+
+        Vector2 getMousePosition(); // Returns the position of the mouse in the game world
 
     private:
 
         Player* player;
-        std::array<std::array<Tile*, MAP_WIDTH>, MAP_WIDTH> tiles;
+        std::array<std::array<TileType, MAP_WIDTH>, MAP_WIDTH> tiles;
         raylib::Window* window;
         raylib::Camera2D* camera;
         std::vector<Entity*> entities;

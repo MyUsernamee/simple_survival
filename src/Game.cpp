@@ -18,7 +18,7 @@ Game::Game()
 
         for (int y = 0; y < MAP_WIDTH; y++) {
 
-            tiles[x][y] = new Tile();
+            tiles[x][y] = TileType::GRASS;
 
         }
 
@@ -29,7 +29,7 @@ Game::Game()
 void Game::update()
 {
 
-    player->update();
+    player->update(this);
 
     for (Entity* entity : entities) {
 
@@ -45,7 +45,38 @@ void Game::render()
     camera->BeginMode();
     window->ClearBackground(raylib::Color(0, 0, 0, 255));
 
-    player->render();
+    for (int x = 0; x < MAP_WIDTH; x++) {
+
+        for (int y = 0; y < MAP_WIDTH; y++) {
+
+            raylib::Color color = raylib::Color(0, 0, 0, 255);
+
+            switch (tiles[x][y]) {
+
+                case TileType::GRASS:
+                    color = raylib::Color(0, 255, 0, 255);
+                    break;
+
+                case TileType::DIRT:
+                    color = raylib::Color(255, 255, 0, 255);
+                    break;
+
+                case TileType::WATER:
+                    color = raylib::Color(0, 0, 255, 255);
+                    break;
+
+            }
+
+            DrawRectangle(x * 16, y * 16, 16, 16, color);
+
+        }
+
+    }
+    player->render(this);
+
+    // Draw the position of the player
+    raylib::DrawText(std::to_string(player->getPosition2D().x), 10, 10, 20, raylib::Color(255, 255, 255, 255));
+    raylib::DrawText(std::to_string(player->getPosition2D().y), 10, 30, 20, raylib::Color(255, 255, 255, 255));
 
     // Smooth camera towards player
     camera->target = (player->getPosition2D() - camera->target) * 0.1 + camera->target;
@@ -56,7 +87,15 @@ void Game::render()
 
     }
 
+
     window->EndDrawing();
+
+}
+
+Vector2 Game::getMousePosition()
+{
+
+    return camera->GetScreenToWorld(GetMousePosition());
 
 }
 

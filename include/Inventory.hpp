@@ -15,16 +15,16 @@ class Inventory {
 
         void clear(); // TODO: Implement
 
-        std::optional<Item*> getItem(int index);
-        std::optional<Item*> getItem(int x, int y);
+        std::optional<Item> getItem(int index);
+        std::optional<Item> getItem(int x, int y);
 
-        std::optional<Item*> popItem(int index);
-        std::optional<Item*> popItem(int x, int y);
+        std::optional<Item> popItem(int index);
+        std::optional<Item> popItem(int x, int y);
 
-        Slot* getSlot(int index);
-        Slot* getSlot(int x, int y);
+        Slot& getSlot(int index) { return items[index]; }
+        Slot& getSlot(int x, int y) { return items[getIndex(x, y)]; }
 
-        void addItem(Item* item);
+        void addItem(Item& item);
 
         char getWidth() { return width; }
         char getHeight() { return height; }
@@ -37,6 +37,6 @@ class Inventory {
 
         char width, height;
         int size;
-        Slot** items;
+        Slot* items;
 
 };
