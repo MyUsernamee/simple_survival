@@ -12,6 +12,8 @@ int main() {
     // We give the player a dummy item
     Item item = Item("dummy", "Dummy item", "Item created for testing purposes", "assets/dummy.png");
     game->getPlayer()->getInventory()->addItem(item);
+    // Set it to 64
+    game->getPlayer()->getInventory()->getSlot(0).setCount(64);
 
     while(!game->shouldClose()) {
 

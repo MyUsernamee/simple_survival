@@ -3,8 +3,8 @@
 Game::Game()
 {
 
-    window = new raylib::Window(800, 450, "Game");
-    window->SetTargetFPS(60);
+    window = new raylib::Window(800, 450, "Game", FLAG_WINDOW_RESIZABLE);
+    window->Maximize();
     camera = new raylib::Camera2D(
         raylib::Vector2(window->GetWidth() / 2.0f, window->GetHeight() / 2.0f),
         raylib::Vector2(0.0f, 0.0f),
@@ -42,6 +42,13 @@ void Game::update()
 void Game::render()
 {
 
+    if(window->IsResized()) {
+
+        camera->target = raylib::Vector2(window->GetWidth() / 2.0f, window->GetHeight() / 2.0f);
+        camera->offset = raylib::Vector2(window->GetWidth() / 2.0f, window->GetHeight() / 2.0f);
+
+    }
+
     camera->BeginMode();
     window->ClearBackground(raylib::Color(0, 0, 0, 255));
 
@@ -54,15 +61,15 @@ void Game::render()
             switch (tiles[x][y]) {
 
                 case TileType::GRASS:
-                    color = raylib::Color(0, 255, 0, 255);
+                    color = GRASS_COLOR; // TODO: Replace with grass texture
                     break;
 
                 case TileType::DIRT:
-                    color = raylib::Color(255, 255, 0, 255);
+                    color = DIRT_COLOR;
                     break;
 
                 case TileType::WATER:
-                    color = raylib::Color(0, 0, 255, 255);
+                    color = WATER_COLOR;    
                     break;
 
             }
@@ -103,5 +110,21 @@ bool Game::shouldClose()
 {
 
     return window->ShouldClose();
+
+}
+
+void Game::removeEntity(Entity* entity)
+{
+
+    for (int i = 0; i < entities.size(); i++) {
+
+        if (entities[i] == entity) {
+
+            entities.erase(entities.begin() + i);
+            return;
+
+        }
+
+    }
 
 }

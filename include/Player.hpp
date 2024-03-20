@@ -8,6 +8,7 @@
 #include "raylib-cpp.hpp"
 #include <array>
 
+
 const int SLOT_COUNT = 10;
 
 #include "Game.hpp"

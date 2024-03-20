@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "entities/DroppedItem.hpp"
 
 void Player::update(Game* game) {
 
@@ -114,6 +115,27 @@ void Player::render(Game* game)
 
         Texture2D item_texture = heldItem.getItem().value().getTexture();
         DrawTextureEx(item_texture, { static_cast<float>(game->getMousePosition().x), static_cast<float>(game->getMousePosition().y) }, 0, 1, WHITE);
+
+    }
+
+    if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON) && heldItem.hasItem()) {
+
+        // Summon a new dropped item.
+        while (heldItem.getCount() > 0) {
+
+            Slot slot = Slot();
+            slot.setItem(heldItem.getItem());
+            slot.setCount(1);
+
+            Vector3 random_vector = { GetRandomValue(-80, 80), GetRandomValue(-80, 80) , 0 };
+
+            DroppedItem* droppedItem = new DroppedItem(slot, position + random_vector, 0); // TODO: Replace with mouse position
+            game->addEntity(droppedItem);
+
+            heldItem.remove(1);
+
+        }
+        heldItem.setItem(std::nullopt);
 
     }
 

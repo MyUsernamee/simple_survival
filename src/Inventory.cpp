@@ -1,4 +1,5 @@
 #include "Inventory.hpp"
+#include "Slot.hpp"
 
 Inventory::Inventory(char width, char height)
 {
@@ -33,6 +34,14 @@ void Inventory::addItem(Item& item)
         {
 
             items[i].setItem(item);
+            return;
+
+        }
+
+        if (items[i].getItem().value().getId() == item.getId() && items[i].getCount() < SLOT_MAX_COUNT)
+        {
+
+            items[i].add(1);
             return;
 
         }

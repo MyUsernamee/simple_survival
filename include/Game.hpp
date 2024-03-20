@@ -12,6 +12,10 @@ class Entity; // Forward declaration
 const unsigned short MAP_WIDTH = 256;
 const unsigned char MAX_STACK_SIZE = 64;
 
+const Color GRASS_COLOR = Color(80, 200, 80, 255);
+const Color DIRT_COLOR = Color(139, 69, 19, 255);
+const Color WATER_COLOR = Color(0, 0, 255, 255);
+
 class Player; // Forward declaration
 
 class Game {
@@ -35,6 +39,9 @@ class Game {
         void setTile(int x, int y, TileType tile);
 
         void addEntity(Entity* entity) { entities.push_back(entity); }
+        void removeEntity(Entity* entity); // Removes an entity from the game
+
+        std::vector<Entity*> getEntities() { return entities; }
 
         Player* getPlayer() { return player; }
 

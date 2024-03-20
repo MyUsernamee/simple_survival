@@ -7,6 +7,8 @@
 const Color SLOT_BG_COLOR = GRAY;
 const Color SLOT_BORDER_COLOR = DARKGRAY;
 
+const int SLOT_MAX_COUNT = 64;
+
 class Slot {
 
     // TODO: MOSTLY FINISHED, NEEDS TESTING
