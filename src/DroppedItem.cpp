@@ -1,5 +1,5 @@
 #include "entities/DroppedItem.hpp"
-
+//TODO: FIMD OUT WHY IT DOESNT POCKUP ALL AT ONCE
 void DroppedItem::update(Game *game)
 {
 
