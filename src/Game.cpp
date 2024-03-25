@@ -1,5 +1,7 @@
 #include "Game.hpp"
 
+#include <algorithm>
+
 Game::Game()
 {
 
@@ -28,8 +30,6 @@ Game::Game()
 
 void Game::update()
 {
-
-    player->update(this);
 
     for (Entity* entity : entities) {
 
@@ -79,7 +79,6 @@ void Game::render()
         }
 
     }
-    player->render(this);
 
     // Draw the position of the player
     raylib::DrawText(std::to_string(player->getPosition2D().x), 10, 10, 20, raylib::Color(255, 255, 255, 255));
@@ -88,12 +87,14 @@ void Game::render()
     // Smooth camera towards player
     camera->target = (player->getPosition2D() - camera->target) * 0.1 + camera->target;
 
+    // Sort entities by z
+    std::sort(entities.begin(), entities.end(), [](Entity* a, Entity* b) { return a->getZIndex() < b->getZIndex(); });
+
     for (Entity* entity : entities) {
 
         entity->render();
 
     }
-
 
     window->EndDrawing();
 
