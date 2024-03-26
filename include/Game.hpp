@@ -3,11 +3,8 @@
 
 #pragma once
 
-#include "Player.hpp"
 #include "Tile.hpp"
-#include "Entity.hpp"
-
-class Entity; // Forward declaration
+#include <raylib-cpp.hpp>
 
 const unsigned short MAP_WIDTH = 256;
 const unsigned char MAX_STACK_SIZE = 64;
@@ -16,7 +13,8 @@ const Color GRASS_COLOR = Color(80, 200, 80, 255);
 const Color DIRT_COLOR = Color(139, 69, 19, 255);
 const Color WATER_COLOR = Color(0, 0, 255, 255);
 
-class Player; // Forward declaration
+class Entity;
+class Player;
 
 class Game {
 
