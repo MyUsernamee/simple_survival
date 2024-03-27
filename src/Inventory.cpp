@@ -64,3 +64,17 @@ void Inventory::render(int x, int y, int slot_width, int slot_height)
     }
 
 }
+
+std::optional<Item> Inventory::getItem(int index)
+{
+
+    return items[index].getItem();
+
+}
+
+std::optional<Item> Inventory::getItem(int x, int y)
+{
+
+    return items[getIndex(x, y)].getItem();
+
+}

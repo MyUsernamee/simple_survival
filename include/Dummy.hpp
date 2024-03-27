@@ -14,6 +14,9 @@ class Dummy: public Entity {
         void update(Game* game);
         void render();
 
+        void onMousePressed(Game* game, MouseButton button) { printf("Dummy clicked\n"); }
+        void onMouseReleased(Game* game, MouseButton button) { printf("Dummy released\n"); }
+
     private:
 
         

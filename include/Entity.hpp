@@ -43,11 +43,16 @@ class Entity {
         char canCollideWith(Entity* entity) { return collisionBitMask & entity->getCollisionBitMask(); }
         char canCollideWith(char collisionBitMask) { return this->collisionBitMask & collisionBitMask; }
 
+        virtual void onCollision(Entity* entity) = 0; // Called when the entity collides with another entity.
+
         /**
          * @brief Damages the entity.
          * @param damage The amount of damage to deal to the entity.
         */
-        void damage(int damage) { health -= damage; }
+        void damage(int damage) { health -= damage; onDamage(damage); if (health <= 0)  onDeath(); }
+
+        void onDamage(int damage) {};
+        void onDeath() {}; // Called when the entity dies.
 
         /**
          * @brief Z-Index of the entity.
@@ -58,6 +63,12 @@ class Entity {
         void setZIndex(int z_index) { this->z_index = z_index; }
 
         bool isFrozen() { return frozen; }
+
+        void onMouseOver(Game* game) {};
+        virtual void onMousePressed(Game* game, MouseButton button) {};
+        virtual void onMouseReleased(Game* game, MouseButton button) {};
+
+        bool contains(raylib::Vector2 point) { return getBoundingBox().CheckCollision(point); }
 
     protected:
 

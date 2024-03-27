@@ -4,6 +4,7 @@
 #include "Item.hpp"
 #include "Slot.hpp"
 #include "Inventory.hpp"
+#include "InventoryEntity.hpp"
 #include "Entity.hpp"
 
 #include "raylib-cpp.hpp"
@@ -44,6 +45,8 @@ class Player: public Entity {
         Inventory inventory;
         Slot heldItem;
         double movementSpeed = 100.0;
+        InventoryEntity inventoryEntity;
+        raylib::Vector2 mouse_position;
         //bool holding_item;
 
 };

@@ -65,6 +65,30 @@ void Game::update()
 
     }
 
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+
+        std::vector<Entity*> entities_at_position = getEntitiesAtPosition(this);
+
+        for (Entity* entity : entities_at_position) {
+
+            entity->onMousePressed(this, MouseButton::MOUSE_BUTTON_LEFT);
+
+        }
+
+    }
+
+    if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+
+        std::vector<Entity*> entities_at_position = getEntitiesAtPosition(this);
+
+        for (Entity* entity : entities_at_position) {
+
+            entity->onMouseReleased(this, MouseButton::MOUSE_BUTTON_LEFT);
+
+        }
+
+    }
+
 }
 
 void Game::render()
@@ -126,7 +150,7 @@ void Game::render()
 
 }
 
-Vector2 Game::getMousePosition()
+raylib::Vector2 Game::getMousePosition()
 {
 
     return camera->GetScreenToWorld(GetMousePosition());
@@ -153,5 +177,24 @@ void Game::removeEntity(Entity* entity)
         }
 
     }
+
+}
+
+std::vector<Entity*> Game::getEntitiesAtPosition(Game* game)
+{
+
+    std::vector<Entity*> entities_at_position;
+
+    for (Entity* entity : entities) {
+
+        if (entity->contains(game->getMousePosition())) {
+
+            entities_at_position.push_back(entity);
+
+        }
+
+    }
+
+    return entities_at_position;
 
 }

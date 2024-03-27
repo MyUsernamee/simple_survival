@@ -57,7 +57,12 @@ class Game {
 
         void generateWorld(); // Generates a world using tiles TODO: Implement this
 
-        Vector2 getMousePosition(); // Returns the position of the mouse in the game world
+        raylib::Vector2 getMousePosition(); // Returns the position of the mouse in the game world
+
+        /**
+         * @brief Returns a list of entities where the position is in the entities bounding box sorted by z-index.
+        */
+        std::vector<Entity*> getEntitiesAtPosition(Game* game);
 
     private:
 

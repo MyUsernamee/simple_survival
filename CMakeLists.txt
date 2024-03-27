@@ -21,4 +21,11 @@ file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 add_executable(simple_survival ${SOURCES})
 
+# Add the tests and all files except main.cpp
+list(FILTER SOURCES EXCLUDE REGEX "main.cpp")
+add_executable(tests tests/test.cpp ${SOURCES})
+
+add_test(NAME tests COMMAND tests)
+
 target_link_libraries(simple_survival raylib)
+target_link_libraries(tests raylib)

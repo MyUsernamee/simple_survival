@@ -8,7 +8,9 @@ Entity::Entity()
 
     position =  raylib::Vector2{0, 0}; 
     velocity =  raylib::Vector2{0, 0};
+    health = 0;
     frozen = false;
+    z_index = 0;
     collisionBitMask = 0b11111111;
 
 }

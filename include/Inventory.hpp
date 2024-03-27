@@ -24,6 +24,9 @@ class Inventory {
         Slot& getSlot(int index) { return items[index]; }
         Slot& getSlot(int x, int y) { return items[getIndex(x, y)]; }
 
+        void setSlot(int index, Slot& slot) { items[index] = slot; }
+        void setSlot(int x, int y, Slot& slot) { items[getIndex(x, y)] = slot; }
+
         void addItem(Item& item);
 
         char getWidth() { return width; }
