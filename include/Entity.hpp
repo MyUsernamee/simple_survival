@@ -43,16 +43,16 @@ class Entity {
         char canCollideWith(Entity* entity) { return collisionBitMask & entity->getCollisionBitMask(); }
         char canCollideWith(char collisionBitMask) { return this->collisionBitMask & collisionBitMask; }
 
-        virtual void onCollision(Entity* entity) = 0; // Called when the entity collides with another entity.
+        virtual void onCollision(Entity* entity) {}; // Called when the entity collides with another entity.
 
         /**
          * @brief Damages the entity.
          * @param damage The amount of damage to deal to the entity.
         */
-        void damage(int damage) { health -= damage; onDamage(damage); if (health <= 0)  onDeath(); }
+        void damage(int damage) { health -= damage; onDamage(damage); if (health <= 0)  onDeath(this->game); }
 
         void onDamage(int damage) {};
-        void onDeath() {}; // Called when the entity dies.
+        void virtual onDeath(Game* game) {}; // Called when the entity dies.
 
         /**
          * @brief Z-Index of the entity.
@@ -70,6 +70,8 @@ class Entity {
 
         bool contains(raylib::Vector2 point) { return getBoundingBox().CheckCollision(point); }
 
+        void setGame(Game* game) { this->game = game; }
+
     protected:
 
         raylib::Vector2 position;
@@ -79,6 +81,10 @@ class Entity {
         char collisionBitMask;
         bool frozen;
         int z_index;
+
+    private:
+
+        Game* game;
 
 
 };

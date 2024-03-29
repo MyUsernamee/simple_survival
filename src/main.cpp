@@ -2,6 +2,7 @@
 #include "Player.hpp"
 #include <Dummy.hpp>
 #include "InventoryEntity.hpp"
+#include <Zombie.hpp>
 
 int main() {
 
@@ -19,6 +20,10 @@ int main() {
     Inventory inventory = Inventory(8, 8);
     InventoryEntity* inventoryEntity = new InventoryEntity(raylib::Vector2(0, 0), inventory);
     game->addEntity(inventoryEntity);
+
+    // Add a zombie to the game
+    Zombie* zombie = new Zombie(raylib::Vector2(0, 0));
+    game->addEntity(zombie);
 
     // Give the dummy a werid bitmask
     //dummy.setCollisionBitMask(0b00000001);

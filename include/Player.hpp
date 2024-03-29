@@ -39,6 +39,8 @@ class Player: public Entity {
 
         bool isHoldingItem() { return heldItem.hasItem(); }
 
+        void onCollision(Entity* entity) {};
+
 
     private:
 

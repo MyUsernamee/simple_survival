@@ -4,11 +4,16 @@
 
 #include <algorithm>
 
+#define TAU 6.28318530718
+
 Game::Game()
 {
 
+    time = 0;
+    days = 0;
     window = new raylib::Window(800, 450, "Game", FLAG_WINDOW_RESIZABLE);
     window->Maximize();
+    window->SetTargetFPS(60);
     camera = new raylib::Camera2D(
         raylib::Vector2(window->GetWidth() / 2.0f, window->GetHeight() / 2.0f),
         raylib::Vector2(0.0f, 0.0f),
@@ -59,7 +64,10 @@ void Game::update()
 
     }
 
-    for (Entity* entity : entities) {
+    // We clone entities
+    std::vector<Entity*> entities_ = this->entities;
+
+    for (Entity* entity : entities_) {
 
         entity->update(this);
 
@@ -67,7 +75,7 @@ void Game::update()
 
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 
-        std::vector<Entity*> entities_at_position = getEntitiesAtPosition(this);
+        std::vector<Entity*> entities_at_position = getEntitiesAtMousePosition();
 
         for (Entity* entity : entities_at_position) {
 
@@ -79,7 +87,7 @@ void Game::update()
 
     if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
 
-        std::vector<Entity*> entities_at_position = getEntitiesAtPosition(this);
+        std::vector<Entity*> entities_at_position = getEntitiesAtMousePosition();
 
         for (Entity* entity : entities_at_position) {
 
@@ -89,10 +97,20 @@ void Game::update()
 
     }
 
+    time += getDeltaTime();
+    if (time >= 1.0) {
+
+        time = 0;
+        days++;
+
+    }
+
 }
 
 void Game::render()
 {
+
+    window->BeginDrawing();
 
     // TODO: Move to new function
     if(window->IsResized()) {
@@ -127,11 +145,20 @@ void Game::render()
 
             }
 
-            DrawRectangle(x * 16, y * 16, 16, 16, color);
+            DrawRectangle(x * 16 - MAP_WIDTH * 8, y * 16 - MAP_WIDTH * 8, 16, 16, color);
 
         }
 
     }
+
+    camera->EndMode();
+
+    DrawFPS(0, 0);
+
+    // Draw a large rectangle to make everything darker based on time of day
+    DrawRectangle(0, 0, window->GetWidth(), window->GetHeight(), raylib::Color(0, 0, 0, std::max(std::sin(getDayProgress() * TAU) * 0.5 + 0.5, 0.0) * 255));
+
+    camera->BeginMode();
 
     // Smooth camera towards player
     camera->target = (player->getPosition() - camera->target) * 0.1 + camera->target;
@@ -180,14 +207,14 @@ void Game::removeEntity(Entity* entity)
 
 }
 
-std::vector<Entity*> Game::getEntitiesAtPosition(Game* game)
+std::vector<Entity*> Game::getEntitiesAtMousePosition()
 {
 
     std::vector<Entity*> entities_at_position;
 
     for (Entity* entity : entities) {
 
-        if (entity->contains(game->getMousePosition())) {
+        if (entity->contains(this->getMousePosition())) { // TODO: DRY CODE FIX ME
 
             entities_at_position.push_back(entity);
 
@@ -196,5 +223,32 @@ std::vector<Entity*> Game::getEntitiesAtPosition(Game* game)
     }
 
     return entities_at_position;
+
+}
+
+std::vector<Entity*> Game::getEntitiesAtPosition(raylib::Vector2 position)
+{
+
+    std::vector<Entity*> entities_at_position;
+
+    for (Entity* entity : entities) {
+
+        if (entity->contains(position)) {
+
+            entities_at_position.push_back(entity);
+
+        }
+
+    }
+
+    return entities_at_position;
+
+}
+
+void Game::addEntity(Entity* entity)
+{
+
+    entities.push_back(entity);
+    entity->setGame(this);
 
 }

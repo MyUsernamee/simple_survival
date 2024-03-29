@@ -1,6 +1,7 @@
 #include "Entity.hpp"
 #include "Game.hpp"
 
+#include <cmath>
 #include <raylib-cpp.hpp>
 
 Entity::Entity()
@@ -22,7 +23,7 @@ void Entity::physics_update(Game *game)
     position.y += velocity.y * game->getDeltaTime();
 
     // Apply friction
-    velocity *= 0.8; // TODO: Make this a variable
+    velocity *= 0.9; // TODO: Make this a variable
 
 }
 
@@ -41,6 +42,10 @@ bool Entity::collidesWith(Entity *entity)
 
     return false;
 
+}
+
+template <typename T> int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
 }
 
 bool Entity::doCollision(Entity *entity)
@@ -82,7 +87,10 @@ bool Entity::doCollision(Entity *entity)
         if (entity->isFrozen()) {
 
             // Only move ourselveds by the resolution
-            position += resolution;
+            raylib::Vector2 signed_direction = position - entity->getPosition();
+
+            position.x += resolution.x * sgn(signed_direction.x); // Why the Std lib doesn't have signum is beyond me
+            position.y += resolution.y * sgn(signed_direction.y);
 
             // Cancel out the velocity in that direction
             if (resolution.x != 0) {

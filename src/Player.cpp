@@ -2,9 +2,11 @@
 
 void Player::update(Game* game) {
 
-    Vector2 movement_vector = {0, 0};
+    raylib::Vector2 movement_vector = {0, 0};
     movement_vector.x = IsKeyDown(KEY_D) - IsKeyDown(KEY_A);
     movement_vector.y = IsKeyDown(KEY_S) - IsKeyDown(KEY_W);
+
+    movement_vector = movement_vector.Normalize();
 
     velocity.x = movement_vector.x * this->movementSpeed;
     velocity.y = movement_vector.y * this->movementSpeed;
@@ -24,6 +26,21 @@ void Player::update(Game* game) {
     this->inventoryEntity.setPosition(this->position + Vector2{0, 32});
 
     mouse_position = game->getMousePosition();
+
+    if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
+
+        // Get the hovered entity
+        std::vector<Entity*> entities_at_position = game->getEntitiesAtMousePosition();
+
+        double damage = 10.0; // TODO: Calculate damage based on selected item.
+
+        for (Entity* entity : entities_at_position) {
+
+            entity->damage(damage);
+
+        }
+
+    }
 
     // TODO: Add a way to drop items.
 

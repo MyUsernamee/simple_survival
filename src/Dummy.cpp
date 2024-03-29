@@ -15,7 +15,7 @@ Dummy::Dummy(raylib::Vector2 position, raylib::Vector2 size)
 
     this->position = position;
     this->size = size;
-    this->frozen = false;
+    this->frozen = true;
 
 }
 

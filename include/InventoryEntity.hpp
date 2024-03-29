@@ -20,6 +20,8 @@ class InventoryEntity : public Entity {
         void onMousePressed(Game* game, MouseButton button);
         void onMouseReleased(Game* game, MouseButton button);
 
+        void onCollision(Entity* other) {};
+
     private:
 
         Inventory inventory;

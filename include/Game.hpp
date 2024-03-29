@@ -36,7 +36,7 @@ class Game {
         TileType getTile(int x, int y);
         void setTile(int x, int y, TileType tile);
 
-        void addEntity(Entity* entity) { entities.push_back(entity); }
+        void addEntity(Entity* entity);
         void removeEntity(Entity* entity); // Removes an entity from the game
 
         std::vector<Entity*> getEntities() { return entities; }
@@ -62,7 +62,17 @@ class Game {
         /**
          * @brief Returns a list of entities where the position is in the entities bounding box sorted by z-index.
         */
-        std::vector<Entity*> getEntitiesAtPosition(Game* game);
+        std::vector<Entity*> getEntitiesAtMousePosition();
+        std::vector<Entity*> getEntitiesAtPosition(raylib::Vector2 position);
+
+        double getTime() { return time; }
+        double getDays() { return days; }
+
+        void setTime(double time) { this->time = time; }
+        void setDays(double days) { this->days = days; }
+
+        double getTimeOfDay() { return std::fmod(time, day_length); }
+        double getDayProgress() { return time / day_length; }
 
     private:
 
@@ -71,5 +81,10 @@ class Game {
         raylib::Window* window;
         raylib::Camera2D* camera;
         std::vector<Entity*> entities;
+
+        double time;
+        double days;
+
+        const double day_length = 60.0 * 2.0; // 2 minutes per day
 
 };

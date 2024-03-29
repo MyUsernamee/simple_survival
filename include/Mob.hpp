@@ -6,6 +6,8 @@ class Mob : public Entity {
 
     public:
 
+        Mob(raylib::Vector2 position, raylib::Vector2 size, double speed);
+
         void update(Game* game);
         void render();
 
@@ -16,6 +18,8 @@ class Mob : public Entity {
 
         void onMousePressed(Game* game, MouseButton button) { printf("Mob clicked\n"); }
         void onMouseReleased(Game* game, MouseButton button) { printf("Mob released\n"); }
+
+        void move(raylib::Vector2 movement) { this->movement = movement; }
 
     private:
 
