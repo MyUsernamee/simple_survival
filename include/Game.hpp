@@ -85,6 +85,6 @@ class Game {
         double time;
         double days;
 
-        const double day_length = 60.0 * 2.0; // 2 minutes per day
+        const double day_length = 60.0 * 10.0; // 2 minutes per day
 
 };

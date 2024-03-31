@@ -12,7 +12,7 @@ class Item {
 
         Item(std::string id, std::string name, std::optional<std::string> description, const char* texturePath);
 
-        void use(); // Called when the player uses the item (Does nothing by default, but can be overridden by subclasses)
+        virtual void use() {}; // Called when the player uses the item (Does nothing by default, but can be overridden by subclasses)
 
         Texture2D getTexture() { return texture; }
         std::string getName() { return name; }
