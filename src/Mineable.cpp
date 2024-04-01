@@ -7,7 +7,7 @@ Mineable::Mineable(int x, int y, int health, const char * texture, Item dropped_
 {
 
     // TODO: Implement this and the reset of this class
-    this->setPosition(raylib::Vector2{x, y});
+    this->setPosition(raylib::Vector2{static_cast<float>(x), static_cast<float>(y)});
     this->setHealth(health);
     this->setTexture(texture);
     this->dropped_item = dropped_item;

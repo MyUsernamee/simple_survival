@@ -6,7 +6,7 @@
 DroppedItem::DroppedItem(int x, int y, Item item)
 {
 
-    this->setPosition(raylib::Vector2{x, y});
+    this->setPosition(raylib::Vector2{static_cast<float>(x), static_cast<float>(y)});
     this->item = item;
 
     this->size = raylib::Vector2{static_cast<float>(this->item.getTexture().width), static_cast<float>(this->item.getTexture().height)};
