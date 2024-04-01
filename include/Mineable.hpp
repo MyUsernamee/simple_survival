@@ -2,6 +2,7 @@
 
 
 #include "Entity.hpp"
+#include "Item.hpp"
 
 
 class Mineable : public Entity {
@@ -14,9 +15,11 @@ class Mineable : public Entity {
         void update(Game* game) override;
         void render() override;
 
+        void onDeath(Game* game) override;
+
     protected:
 
-        Item dropped_item;
+        Item dropped_item; // TODO: Implement Mineable class
 
 
 };
