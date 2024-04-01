@@ -2,6 +2,7 @@
 
 
 #include "Entity.hpp"
+#include "Item.hpp"
 
 
 class Mineable : public Entity {
