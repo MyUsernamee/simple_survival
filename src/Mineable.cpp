@@ -43,7 +43,7 @@ void Mineable::onDeath(Game *game)
         // Create a new DroppedItem entity
         DroppedItem* dropped_item = new DroppedItem(position.x, position.y, this->dropped_item);
 
-        dropped_item->setVelocity(raylib::Vector2{GetRandomValue(-100.0, 100.0), GetRandomValue(-100.0, 100.0)});
+        dropped_item->setVelocity(raylib::Vector2{static_cast<float>(GetRandomValue(-100.0, 100.0)), static_cast<float>(GetRandomValue(-100.0, 100.0))});
 
         // TODO: BUG: It is possible to get more than the amount given, I am guessing this has to do with the fact that
         // We are removing the dropped item entity in the middle of the collision loop
