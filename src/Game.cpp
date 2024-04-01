@@ -55,6 +55,8 @@ void Game::update()
                 if (entity->collidesWith(other)) {
 
                     entity->doCollision(other);
+                    entity->onCollision(this, other); // This can most likely segfault, it hasn't yet, but it probably will, so yea.
+                    other->onCollision(this, entity);
 
                 }
 

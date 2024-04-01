@@ -3,13 +3,11 @@
 #include <Dummy.hpp>
 #include "InventoryEntity.hpp"
 #include <Zombie.hpp>
+#include <Mineable.hpp>
 
 int main() {
 
     Game* game = new Game();
-
-    Dummy dummy = Dummy(raylib::Vector2(0, 0), raylib::Vector2(50, 50));
-    game->addEntity(&dummy);
 
     // Give the player a test item
     Item item = Item("test", "Test Item", "", "assets/dummy.png");
@@ -24,6 +22,10 @@ int main() {
     // Add a zombie to the game
     Zombie* zombie = new Zombie(raylib::Vector2(0, 0));
     game->addEntity(zombie);
+
+    // We add a Mineable item to the game
+    Mineable* mineable = new Mineable(100, 0, 100, "assets/dummy.png", item);
+    game->addEntity(mineable);
 
     // Give the dummy a werid bitmask
     //dummy.setCollisionBitMask(0b00000001);
