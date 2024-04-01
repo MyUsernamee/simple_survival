@@ -20,11 +20,11 @@ int main() {
     game->addEntity(inventoryEntity);
 
     // Add a zombie to the game
-    Zombie* zombie = new Zombie(raylib::Vector2(0, 0));
-    game->addEntity(zombie);
+    // Zombie* zombie = new Zombie(raylib::Vector2(0, 0));
+    // game->addEntity(zombie);
 
     // We add a Mineable item to the game
-    Mineable* mineable = new Mineable(100, 0, 100, "assets/dummy.png", item);
+    Mineable* mineable = new Mineable(100, 0, 100, "assets/dummy.png", item, 64);
     game->addEntity(mineable);
 
     // Give the dummy a werid bitmask

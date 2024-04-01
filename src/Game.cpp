@@ -99,6 +99,30 @@ void Game::update()
 
     }
 
+    if (IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)) {
+
+        std::vector<Entity*> entities_at_position = getEntitiesAtMousePosition();
+
+        for (Entity* entity : entities_at_position) {
+
+            entity->onMousePressed(this, MouseButton::MOUSE_BUTTON_RIGHT);
+
+        }
+
+    }
+
+    if (IsMouseButtonReleased(MOUSE_RIGHT_BUTTON)) {
+
+        std::vector<Entity*> entities_at_position = getEntitiesAtMousePosition();
+
+        for (Entity* entity : entities_at_position) {
+
+            entity->onMouseReleased(this, MouseButton::MOUSE_BUTTON_RIGHT);
+
+        }
+
+    }
+
     time += getDeltaTime();
     if (time >= 1.0) {
 

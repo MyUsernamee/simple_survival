@@ -90,10 +90,10 @@ void InventoryEntity::onMousePressed(Game *game, MouseButton button)
                 player->setHeldItem(this->inventory.getSlot(inventory_position.x, inventory_position.y));
 
                 // Remove the item from the inventory
-                this->inventory.getSlot(inventory_position.x, inventory_position.y).setItem(std::nullopt); // TODO: Make clear function
+                this->inventory.getSlot(inventory_position.x, inventory_position.y).setCount(this->inventory.getSlot(inventory_position.x, inventory_position.y).getCount() / 2);
 
-                // Set the count of the item to half
-                player->getHeldItem().setCount(player->getHeldItem().getCount() / 2);
+                // Set the count of the item to half + 1 if the count is odd
+                player->getHeldItem().setCount(player->getHeldItem().getCount() / 2 + player->getHeldItem().getCount() % 2);
 
                 // If the count is 0, remove the item from the player
                 if (player->getHeldItem().getCount() == 0) {
@@ -115,7 +115,7 @@ void InventoryEntity::onMouseReleased(Game *game, MouseButton button)
 
     Player* player = game->getPlayer();
 
-    if (button == MOUSE_BUTTON_LEFT && player->isHoldingItem()) {
+    if (player->isHoldingItem()) {
 
         // Get the mouse_position relative to the inventory
         raylib::Vector2 mouse_position = game->getMousePosition() - this->position + this->size / 2;
@@ -135,6 +135,21 @@ void InventoryEntity::onMouseReleased(Game *game, MouseButton button)
 
                 // Remove the item from the player
                 player->getHeldItem().setItem(std::nullopt);
+
+            }
+            else if (item.has_value() && item.value().getId() == player->getHeldItem().getItem().value().getId() && this->inventory.getSlot(inventory_position.x, inventory_position.y).getCount() < 64) {
+                // TODO: Make dry and clean code here.
+                // Add as many items as possible to the inventory until the slot is full
+                int count_to_add = std::min(player->getHeldItem().getCount(), 64 - this->inventory.getSlot(inventory_position.x, inventory_position.y).getCount());
+                this->inventory.getSlot(inventory_position.x, inventory_position.y).add(count_to_add);
+
+                // Remove the count from the slot
+                if(!player->getHeldItem().remove(count_to_add)) {
+
+                    // If the player's item is empty, remove the item from the player
+                    player->getHeldItem().setItem(std::nullopt);
+
+                }
 
             }
 

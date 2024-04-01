@@ -10,7 +10,7 @@ class Mineable : public Entity {
 
     public:
 
-        Mineable(int x, int y, int health, const char* texture, Item dropped_item);
+        Mineable(int x, int y, int health, const char* texture, Item dropped_item, int amount);
         ~Mineable();
 
         void update(Game* game) override;
@@ -27,6 +27,7 @@ class Mineable : public Entity {
 
         Item dropped_item; // TODO: Implement Mineable class
         raylib::Texture texture;
+        int amount;
 
 
 };
