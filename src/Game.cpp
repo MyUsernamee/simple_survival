@@ -12,6 +12,7 @@ Game::Game()
     time = 0;
     days = 0;
     window = new raylib::Window(800, 450, "Game", FLAG_WINDOW_RESIZABLE);
+    window->SetIcon(LoadImage("assets/dummy.png"));
     window->Maximize();
     window->SetTargetFPS(60);
     camera = new raylib::Camera2D(
