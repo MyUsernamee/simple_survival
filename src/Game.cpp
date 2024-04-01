@@ -50,6 +50,13 @@ void Game::update()
 
         for (Entity* other : entities) {
 
+            // If the entities to remove vector contains either entity or other, we skip the collision
+            if (std::find(entities_to_remove.begin(), entities_to_remove.end(), entity) != entities_to_remove.end() || std::find(entities_to_remove.begin(), entities_to_remove.end(), other) != entities_to_remove.end()) {
+
+                continue;
+
+            }
+
             if (entity != other) {
 
                 if (entity->collidesWith(other)) {
@@ -70,6 +77,14 @@ void Game::update()
     std::vector<Entity*> entities_ = this->entities;
 
     for (Entity* entity : entities_) {
+
+        // If the entity is in the entities to remove vector, we skip the entity
+        if (std::find(entities_to_remove.begin(), entities_to_remove.end(), entity) != entities_to_remove.end()) { // TODO: This is 100%
+            // Slow and inefficient, we should definetly use a set or store some data in the entity to make this faster
+
+            continue;
+
+        }
 
         entity->update(this);
 
@@ -130,6 +145,8 @@ void Game::update()
         days++;
 
     }
+
+    doEntityVectorModification();
 
 }
 
@@ -220,16 +237,7 @@ bool Game::shouldClose()
 void Game::removeEntity(Entity* entity)
 {
 
-    for (int i = 0; i < entities.size(); i++) {
-
-        if (entities[i] == entity) {
-
-            entities.erase(entities.begin() + i);
-            return;
-
-        }
-
-    }
+    entities_to_remove.push_back(entity);
 
 }
 
@@ -274,7 +282,28 @@ std::vector<Entity*> Game::getEntitiesAtPosition(raylib::Vector2 position)
 void Game::addEntity(Entity* entity)
 {
 
-    entities.push_back(entity);
+    entities_to_add.push_back(entity);
     entity->setGame(this);
+
+}
+
+void Game::doEntityVectorModification()
+{
+
+    // Actually do adds and removes of the entities
+    for (Entity* entity : entities_to_add) {
+
+        entities.push_back(entity);
+
+    }
+
+    for (Entity* entity : entities_to_remove) {
+
+        entities.erase(std::remove(entities.begin(), entities.end(), entity), entities.end());
+
+    }
+
+    entities_to_add.clear();
+    entities_to_remove.clear();
 
 }

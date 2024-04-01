@@ -5,7 +5,13 @@
 #include <Zombie.hpp>
 #include <Mineable.hpp>
 
+#include <iostream>
+#include <filesystem>
+
 int main() {
+
+    // Print the working directory
+    std::cout << "Working Directory: " << std::filesystem::current_path() << std::endl;
 
     Game* game = new Game();
 

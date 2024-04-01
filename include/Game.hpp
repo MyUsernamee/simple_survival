@@ -76,11 +76,15 @@ class Game {
 
     private:
 
+        void doEntityVectorModification();
+
         Player* player;
         std::array<std::array<TileType, MAP_WIDTH>, MAP_WIDTH> tiles;
         raylib::Window* window;
         raylib::Camera2D* camera;
         std::vector<Entity*> entities;
+        std::vector<Entity *> entities_to_add;
+        std::vector<Entity *> entities_to_remove;
 
         double time;
         double days;

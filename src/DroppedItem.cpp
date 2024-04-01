@@ -10,6 +10,7 @@ DroppedItem::DroppedItem(int x, int y, Item item)
     this->item = item;
 
     this->size = raylib::Vector2{static_cast<float>(this->item.getTexture().width), static_cast<float>(this->item.getTexture().height)};
+    
 
 }
 
