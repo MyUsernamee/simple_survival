@@ -29,7 +29,7 @@ class Game {
         void update(); // Renders and updates the game
         void render();
 
-        double getDeltaTime() { return 1.0 / 60.0; } // Returns the time between frames
+        double getDeltaTime() { return window->GetFrameTime(); } // Returns the time between frames
         
         bool shouldClose(); // Returns true if the game should close
 
