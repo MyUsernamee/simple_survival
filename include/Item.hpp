@@ -11,6 +11,7 @@ class Item {
     public:
 
         Item(std::string id, std::string name, std::optional<std::string> description, const char* texturePath);
+        Item();
 
         virtual void use() {}; // Called when the player uses the item (Does nothing by default, but can be overridden by subclasses)
 

@@ -8,3 +8,14 @@ Mineable::Mineable(int x, int y, int health, const char * texture, Item dropped_
     // TODO: Implement this and the reset of this class
 
 }
+
+void Mineable::update(Game *game)
+{
+}
+
+void Mineable::render()
+{
+
+    // TODO: Implement this
+
+}

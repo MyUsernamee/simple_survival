@@ -15,7 +15,7 @@ InventoryEntity::InventoryEntity(raylib::Vector2 position, Inventory &inventory)
 
     position = position;
     this->inventory = inventory;
-    this->size = raylib::Vector2{inventory.getWidth() * 16, inventory.getHeight() * 16};
+    this->size = raylib::Vector2{static_cast<float>(inventory.getWidth() * 16), static_cast<float>(inventory.getHeight() * 16)};
     this->collisionBitMask = 0;
     z_index = 1;
     frozen = true;
