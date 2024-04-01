@@ -3,9 +3,7 @@
 #include <optional>
 
 #include "Item.hpp"
-
-const Color SLOT_BG_COLOR = GRAY;
-const Color SLOT_BORDER_COLOR = DARKGRAY;
+#include "Colors.hpp"
 
 const int SLOT_MAX_COUNT = 64;
 

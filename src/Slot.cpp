@@ -31,7 +31,7 @@ bool Slot::remove(int count)
 void Slot::render(int x, int y, int width, int height)
 {
 
-    DrawRectangle(static_cast<float>(x), static_cast<float>(y), static_cast<float>(width), static_cast<float>(height), SLOT_BG_COLOR);
+    DrawRectangle(static_cast<float>(x), static_cast<float>(y), static_cast<float>(width), static_cast<float>(height), UI_BG_COLOR);
 
     if(item.has_value())
     {
@@ -49,7 +49,7 @@ void Slot::render(int x, int y, int width, int height)
 
     }
 
-    DrawRectangleLines(x, y, width, height, SLOT_BORDER_COLOR);
+    DrawRectangleLines(x, y, width, height, UI_BORDER_COLOR);
 
 }
 

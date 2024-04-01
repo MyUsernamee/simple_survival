@@ -12,9 +12,8 @@ class Recipe {
 
     public:
 
-        Recipe();
         Recipe(std::vector<Item> ingredients, Item result);
-        ~Recipe();
+        ~Recipe(); // TODO: We are going to have to implement proper destructors at some point.
 
         std::vector<Item> getIngredients() { return ingredients; }
         Item getResult() { return result; }
