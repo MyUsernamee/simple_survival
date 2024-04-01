@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+#include "Item.hpp"
 
 /**
  * @brief A recipe for crafting items.
@@ -11,20 +13,16 @@ class Recipe {
     public:
 
         Recipe();
-        Recipe(const char* name, const char* entity, const char* description, std::vector<Item> ingredients, Item result);
+        Recipe(std::vector<Item> ingredients, Item result);
         ~Recipe();
 
-        const char* getName() { return name; }
-        const char* getEntity() { return entity; }
-        const char* getDescription() { return description; }
         std::vector<Item> getIngredients() { return ingredients; }
         Item getResult() { return result; }
 
+        void render(int x, int y, int width, int height); // Render the recipe
+
     private:
 
-        const char* name;
-        const char* entity;
-        const char* description;
         std::vector<Item> ingredients;
         Item result;
 
