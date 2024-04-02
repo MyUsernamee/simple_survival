@@ -1,4 +1,5 @@
 [submodule "./dependencies/raylib-cpp/"]
+	path = dependencies/raylib-cpp
 	url = https://github.com/RobLoach/raylib-cpp.git
 [submodule "./dependencies/json"]
 	path = dependencies/json
