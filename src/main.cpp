@@ -11,7 +11,7 @@
 int main() {
 
     // Print the working directory
-    std::cout << "Working Directory: " << std::filesystem::current_path() << std::endl;
+    TraceLog(LOG_INFO, "Working Directory: %s", std::filesystem::current_path().c_str());
 
     Game* game = new Game();
 

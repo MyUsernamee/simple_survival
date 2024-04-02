@@ -5,6 +5,8 @@
 
 #include "Tile.hpp"
 #include <raylib-cpp.hpp>
+#include <map>
+#include "Recipe.hpp"
 
 const unsigned short MAP_WIDTH = 256;
 const unsigned char MAX_STACK_SIZE = 64;
@@ -74,6 +76,27 @@ class Game {
         double getTimeOfDay() { return std::fmod(time, day_length); }
         double getDayProgress() { return time / day_length; }
 
+        /**
+         * @brief Registers an item to the global item dictionary
+        */
+        void registerItem(Item item) { items[item.getId()] = item; } // TODO: Document literally everything
+        /**
+         * @brief Registers a recipe to the global recipe list 
+         * TODO: Find a way to allow for learned recipes.
+        */
+        void registerRecipe(Recipe recipe) { recipes.push_back(recipe); }
+
+        /**
+         * @brief Get an item by id
+        */
+        Item& getItem(std::string id) { return items[id]; }
+        /**
+         * @brief Get a recipe by index / id
+        */
+        Recipe& getRecipe(int index) { return recipes[index]; }
+
+        std::vector<Recipe>& getRecipes() { return recipes; }
+
     private:
 
         void doEntityVectorModification();
@@ -85,6 +108,9 @@ class Game {
         std::vector<Entity*> entities;
         std::vector<Entity *> entities_to_add;
         std::vector<Entity *> entities_to_remove;
+
+        std::map<std::string, Item> items; // Global item dictionary
+        std::vector<Recipe> recipes; // Global recipe list
 
         double time;
         double days;
