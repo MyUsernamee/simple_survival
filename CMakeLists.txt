@@ -28,18 +28,21 @@ endif()
 
 # raylib-cpp
 add_subdirectory(dependencies/raylib-cpp)
+# json
+add_subdirectory(dependencies/json)
 
 # Copy assets folder on build
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
 # If we are on windows move the executable to the build folder
 if(WIN32)
-  
+
 endif()
 
 # Include Directories
 include_directories(include)
 include_directories(dependencies/raylib-cpp/include)
+include_directories(dependencies/json/include)
 
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
