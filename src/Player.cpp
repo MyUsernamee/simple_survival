@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include <Recipe.hpp>
 
 void Player::update(Game* game) {
 
@@ -58,6 +59,16 @@ void Player::render() {
         this->getHeldItem().render(mouse_position.x, mouse_position.y, 16, 16);
 
     }
+
+    // For testing we are going to render a recipe
+    Item wood = Item("wood", "Wood", "A piece of wood", "assets/wood.png");
+    Item stick = Item("stick", "Stick", "A stick", "assets/stick.png");
+    Slot ingredient_1 = Slot(wood, 1);
+    Slot ingredient_2 = Slot(wood, 1);
+    Slot result = Slot(stick, 1);
+    Recipe recipe = Recipe(std::vector({ingredient_1, ingredient_2}), result);
+
+    recipe.render(position.x + 32, position.y, 128, 32);
 
 }
 

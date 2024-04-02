@@ -14,6 +14,7 @@ class Slot {
     public:
 
         Slot();
+        Slot(std::optional<Item> item, int count = 1);
 
         std::optional<Item> getItem() { return item; }
         int getCount() { return count; }
