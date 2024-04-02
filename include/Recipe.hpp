@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "Item.hpp"
+#include "Slot.hpp"
 
 /**
  * @brief A recipe for crafting items.
@@ -12,17 +13,17 @@ class Recipe {
 
     public:
 
-        Recipe(std::vector<Item> ingredients, Item result);
+        Recipe(std::vector<Slot> ingredients, Slot result);
         ~Recipe(); // TODO: We are going to have to implement proper destructors at some point.
 
-        std::vector<Item> getIngredients() { return ingredients; }
-        Item getResult() { return result; }
+        std::vector<Slot> getIngredients() { return ingredients; }
+        Slot getResult() { return result; }
 
         void render(int x, int y, int width, int height); // Render the recipe
 
     private:
 
-        std::vector<Item> ingredients;
-        Item result;
+        std::vector<Slot> ingredients;
+        Slot result;
 
 };

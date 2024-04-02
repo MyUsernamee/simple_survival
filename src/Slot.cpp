@@ -58,3 +58,11 @@ Slot::Slot()
     item = std::nullopt;
     count = 0;
 }
+
+Slot::Slot(std::optional<Item> item, int count)
+{
+
+    this->item = item;
+    this->count = count;
+
+}
