@@ -3,6 +3,8 @@
 #include "Entity.hpp"
 
 #include <algorithm>
+#include <nlohmann/json.hpp>
+#include <fstream>
 
 #define TAU 6.28318530718
 
@@ -24,6 +26,8 @@ Game::Game()
 
     player = new Player();
     this->addEntity(player);
+
+    loadItems("assets/items.json");
 
     for (int x = 0; x < MAP_WIDTH; x++) {
 
@@ -306,5 +310,24 @@ void Game::doEntityVectorModification()
 
     entities_to_add.clear();
     entities_to_remove.clear();
+
+}
+
+void Game::loadItems(const char* filename) {
+
+    std::ifstream file(filename);
+    nlohmann::json json = nlohmann::json::parse(file);
+
+    TraceLog(LOG_INFO, "Loading items from %s", filename);
+    TraceLog(LOG_INFO, "Loaded %d items", json.size());
+
+    for (nlohmann::json item : json) {
+
+        TraceLog(LOG_INFO, "Loading item %s", item["name"].template get<std::string>().c_str());
+
+        Item item_ = Item(item["id"].template get<std::string>(), item["name"].template get<std::string>(), "", item["texture"].template get<std::string>().c_str());
+        this->registerItem(item_);
+
+    }
 
 }

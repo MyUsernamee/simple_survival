@@ -97,6 +97,9 @@ class Game {
 
         std::vector<Recipe>& getRecipes() { return recipes; }
 
+        void loadItems(const char* filename); // Loads items from a json file TODO: Do this.
+        void loadRecipes(const char* filename); // Loads recipes from a json file
+
     private:
 
         void doEntityVectorModification();
