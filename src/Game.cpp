@@ -331,3 +331,15 @@ void Game::loadItems(const char* filename) {
     }
 
 }
+
+void Game::loadRecipes(const char* filename) {
+
+    std::ifstream file(filename);
+    nlohmann::json json = nlohmann::json::parse(file);
+
+    TraceLog(LOG_INFO, "Loading recipes from %s", filename);
+    TraceLog(LOG_INFO, "Loaded %d recipes", json.size());
+
+    // TODO: Implement
+
+}
