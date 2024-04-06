@@ -18,6 +18,7 @@ const int SLOT_COUNT = 10;
 class Game; // Forward declaration
 
 #include "Entity.hpp"
+#include "CraftingMenu.hpp"
 
 class Player: public Entity {
 
@@ -48,6 +49,7 @@ class Player: public Entity {
         Slot heldItem;
         double movementSpeed = 100.0;
         InventoryEntity inventoryEntity;
+        CraftingMenu craftingMenu;
         raylib::Vector2 mouse_position;
         //bool holding_item;
 

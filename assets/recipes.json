@@ -1,0 +1,8 @@
+[
+    {
+        "ingredients": [
+            {"id": "wood", "count": 2}
+        ],
+        "result": {"id": "stick", "count": 4}
+    }
+]

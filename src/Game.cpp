@@ -28,6 +28,7 @@ Game::Game()
     this->addEntity(player);
 
     loadItems("assets/items.json");
+    loadRecipes("assets/recipes.json");
 
     for (int x = 0; x < MAP_WIDTH; x++) {
 
@@ -340,6 +341,41 @@ void Game::loadRecipes(const char* filename) {
     TraceLog(LOG_INFO, "Loading recipes from %s", filename);
     TraceLog(LOG_INFO, "Loaded %d recipes", json.size());
 
-    // TODO: Implement
+    /*
+    
+        Exmaple recipe json:
+
+        [
+            {
+                "ingredients": [
+                    {"id": "wood", "count": 2}
+                ],
+                "result": {"id": "stick", "count": 4}
+            }
+        ]
+    
+    */
+
+    for (nlohmann::json recipe : json) {
+
+        std::vector<Slot> ingredients;
+
+        for (nlohmann::json ingredient : recipe["ingredients"]) {
+
+            // Find the item by id
+            Item& item = this->getItem(ingredient["id"].template get<std::string>());
+            Slot slot = Slot(item, ingredient["count"].template get<int>());
+
+            ingredients.push_back(slot);
+
+        }
+
+        Recipe recipe_ = Recipe(ingredients, Slot(this->getItem(recipe["result"]["id"].template get<std::string>()), recipe["result"]["count"].template get<int>()));
+        this->registerRecipe(recipe_);
+
+    }
+
+    TraceLog(LOG_INFO, "Loaded %d recipes", this->getRecipes().size());
+
 
 }

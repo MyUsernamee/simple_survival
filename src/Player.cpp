@@ -15,16 +15,20 @@ void Player::update(Game* game) {
     if (IsKeyPressed (KEY_E) ) { // TODO: Add keymap
 
         game->addEntity(&this->inventoryEntity);
+        game->addEntity(&this->craftingMenu);
+        this->craftingMenu.setRecipes(game->getRecipes());
 
     }
 
     if (IsKeyReleased(KEY_E)) {
 
         game->removeEntity(&this->inventoryEntity);
+        game->removeEntity(&this->craftingMenu);
 
     }
 
     this->inventoryEntity.setPosition(this->position + Vector2{0, 32});
+    this->craftingMenu.setPosition(this->position + Vector2{32, 0});
 
     mouse_position = game->getMousePosition();
 
@@ -43,6 +47,8 @@ void Player::update(Game* game) {
 
     }
 
+    
+
     // TODO: Add a way to drop items.
 
 }
@@ -60,16 +66,6 @@ void Player::render() {
 
     }
 
-    // For testing we are going to render a recipe
-    Item wood = Item("wood", "Wood", "A piece of wood", "assets/wood.png");
-    Item stick = Item("stick", "Stick", "A stick", "assets/stick.png");
-    Slot ingredient_1 = Slot(wood, 1);
-    Slot ingredient_2 = Slot(wood, 1);
-    Slot result = Slot(stick, 1);
-    Recipe recipe = Recipe(std::vector({ingredient_1, ingredient_2}), result);
-
-    recipe.render(position.x + 32, position.y, 128, 32);
-
 }
 
 Player::Player()
@@ -80,4 +76,5 @@ Player::Player()
     frozen = false;
     z_index = 2;
     inventoryEntity = InventoryEntity(Vector2{0, 0}, inventory);
+    this->craftingMenu = craftingMenu = CraftingMenu(Vector2{0, 0}, Vector2{64, 128}, std::vector<Recipe>{});
 }
