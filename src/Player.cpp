@@ -28,7 +28,7 @@ void Player::update(Game* game) {
     }
 
     this->inventoryEntity.setPosition(this->position + Vector2{0, 32});
-    this->craftingMenu.setPosition(this->position + Vector2{32, 0});
+    this->craftingMenu.setPosition(this->position + Vector2{64 + 16, -64});
 
     mouse_position = game->getMousePosition();
 
@@ -76,5 +76,6 @@ Player::Player()
     frozen = false;
     z_index = 2;
     inventoryEntity = InventoryEntity(Vector2{0, 0}, inventory);
-    this->craftingMenu = craftingMenu = CraftingMenu(Vector2{0, 0}, Vector2{64, 128}, std::vector<Recipe>{});
+    this->craftingMenu = craftingMenu = CraftingMenu(Vector2{0, 0}, Vector2{128, 128}, std::vector<Recipe>{});
+    this->craftingMenu.setZIndex(3);
 }

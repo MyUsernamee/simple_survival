@@ -19,7 +19,7 @@ class Recipe {
         std::vector<Slot> getIngredients() { return ingredients; }
         Slot getResult() { return result; }
 
-        void render(int x, int y, int width, int height); // Render the recipe
+        void render(int x, int y, int width, int height); // Render the recipe at the given position
 
     private:
 

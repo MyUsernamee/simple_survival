@@ -41,7 +41,7 @@ class Slot {
          * 
          * Mostly for debugging purposes, but might have a more flushed out use later.
         */ 
-        void render(int x, int y, int width, int height); // TODO: Add a hover effect for the slot to show more data. Render item amount and count.
+        void render(int x, int y, int width, int height);
 
     private:
 

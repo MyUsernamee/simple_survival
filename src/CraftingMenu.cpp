@@ -1,4 +1,6 @@
 #include "CraftingMenu.hpp"
+#include "Game.hpp"
+
 
 CraftingMenu::CraftingMenu(raylib::Vector2 position, raylib::Vector2 size, std::vector<Recipe> recipes)
 {
@@ -22,16 +24,6 @@ void CraftingMenu::update(Game *game)
     
     scroll += GetMouseWheelMove() * 32;
 
-    BeginTextureMode(texture);
-
-    for(int i = 0; i < recipes.size(); i++)
-    {
-        Recipe recipe = recipes[i];
-        recipe.render(0, i * 32, size.x, 32);
-    }
-
-    EndTextureMode();
-
 }
 
 void CraftingMenu::render()
@@ -39,9 +31,22 @@ void CraftingMenu::render()
 
     // Render the box
     DrawRectangle(position.x, position.y, size.x, size.y, UI_BG_COLOR);
-    TraceLog(LOG_INFO, "Drawing crafting menu at %f, %f", position.x, position.y);
+    ///TraceLog(LOG_INFO, "Drawing crafting menu at %f, %f", position.x, position.y);
 
-    DrawTexturePro(texture.texture, raylib::Rectangle{0, scroll, size.x, size.y + scroll}, raylib::Rectangle{0, 0, size.x, size.y}, raylib::Vector2{position.x, position.y}, 0, WHITE);
+    // Render the recipes
+    for (int i = scroll / 32; i < recipes.size(); i++)
+    {
+
+        Recipe recipe = recipes[i];
+
+        // Draw the recipe
+        recipe.render(position.x, position.y + i * 32 - scroll, size.x, 32);
+
+        if (32 * i > size.y + scroll) {
+            break;
+        }
+
+    }
 
 }
 
