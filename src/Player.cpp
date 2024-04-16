@@ -28,7 +28,7 @@ void Player::update(Game* game) {
     }
 
     this->inventoryEntity.setPosition(this->position + Vector2{0, 32});
-    this->craftingMenu.setPosition(this->position + Vector2{64 + 16, -64});
+    this->craftingMenu.setPosition(this->position + Vector2{64 + 64 + 32, 0});
 
     mouse_position = game->getMousePosition();
 

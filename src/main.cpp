@@ -41,6 +41,11 @@ int main() {
     // Simple* simple = new Simple();
     // game->addEntity(simple);
 
+    // We get the wood item from the game
+    Item wood = game->getItem("wood");
+    // We add the wood item to the player's inventory
+    game->getPlayer()->getInventory()->addItems(wood, 2);
+
     while(!game->shouldClose()) {
 
         game->render();

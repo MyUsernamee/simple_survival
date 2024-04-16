@@ -42,6 +42,11 @@ class Slot {
          * Mostly for debugging purposes, but might have a more flushed out use later.
         */ 
         void render(int x, int y, int width, int height);
+        void renderTooltip(int x, int y, int width, int height);
+        /**
+         * @brief Render the slot at the given position.
+        */
+        void render(int x, int y, int width, int height, raylib::Vector2 mouse_position);
 
     private:
 

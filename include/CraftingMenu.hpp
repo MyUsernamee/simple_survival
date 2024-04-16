@@ -24,6 +24,7 @@ class CraftingMenu : public Entity {
         std::vector<Recipe> recipes;
 
         int scroll = 0;
+        int selectedRecipe = -1;
 
         RenderTexture2D texture;
 };
