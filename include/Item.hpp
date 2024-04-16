@@ -11,16 +11,18 @@ class Item {
     public:
 
         Item(std::string id, std::string name, std::optional<std::string> description, const char* texturePath);
+        Item();
 
-        void use(); // Called when the player uses the item (Does nothing by default, but can be overridden by subclasses)
+        virtual void use() {}; // Called when the player uses the item (Does nothing by default, but can be overridden by subclasses)
 
         Texture2D getTexture() { return texture; }
         std::string getName() { return name; }
         std::optional<std::string> getDescription() { return description; }
-        std::string getId() { return id; }
+        std::string getId() const { return id; }
 
         bool operator== (const Item& other) const { return id == other.id && name == other.name && description == other.description; }
-
+        bool operator< (const Item& other) const { return id < other.id; } // This is used for sorting
+        
     private:
 
         std::string id; // Unique identifier for the item class This is used to identify if the item is stacked etc. TODO: Find a better way to do this

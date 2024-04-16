@@ -1,0 +1,15 @@
+[
+    {
+        "id": "wood",
+        "name": "Wood",
+        "description": "Wood is a porous and fibrous structural tissue found in the stems and roots of trees and other woody plants. It is an organic material, a natural composite of cellulose fibers that are strong in tension and embedded in a matrix of lignin that resists compression.",
+        "texture": "assets/wood.png"
+    },
+    {
+        "id": "stick",
+        "name": "Stick",
+        "description": "A stick is a long, slender piece of wood that has fallen or been cut from a tree or shrub."
+        ,"texture": "assets/stick.png"
+
+    }
+]

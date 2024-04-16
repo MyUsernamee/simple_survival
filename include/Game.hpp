@@ -3,11 +3,10 @@
 
 #pragma once
 
-#include "Player.hpp"
 #include "Tile.hpp"
-#include "Entity.hpp"
-
-class Entity; // Forward declaration
+#include <raylib-cpp.hpp>
+#include <map>
+#include "Recipe.hpp"
 
 const unsigned short MAP_WIDTH = 256;
 const unsigned char MAX_STACK_SIZE = 64;
@@ -16,7 +15,8 @@ const Color GRASS_COLOR = Color(80, 200, 80, 255);
 const Color DIRT_COLOR = Color(139, 69, 19, 255);
 const Color WATER_COLOR = Color(0, 0, 255, 255);
 
-class Player; // Forward declaration
+class Entity;
+class Player;
 
 class Game {
 
@@ -31,14 +31,14 @@ class Game {
         void update(); // Renders and updates the game
         void render();
 
-        double getDeltaTime() { return 1.0 / 60.0; } // Returns the time between frames
+        double getDeltaTime() { return window->GetFrameTime(); } // Returns the time between frames
         
         bool shouldClose(); // Returns true if the game should close
 
         TileType getTile(int x, int y);
         void setTile(int x, int y, TileType tile);
 
-        void addEntity(Entity* entity) { entities.push_back(entity); }
+        void addEntity(Entity* entity);
         void removeEntity(Entity* entity); // Removes an entity from the game
 
         std::vector<Entity*> getEntities() { return entities; }
@@ -59,14 +59,65 @@ class Game {
 
         void generateWorld(); // Generates a world using tiles TODO: Implement this
 
-        Vector2 getMousePosition(); // Returns the position of the mouse in the game world
+        raylib::Vector2 getMousePosition(); // Returns the position of the mouse in the game world
+
+        /**
+         * @brief Returns a list of entities where the position is in the entities bounding box sorted by z-index.
+        */
+        std::vector<Entity*> getEntitiesAtMousePosition();
+        std::vector<Entity*> getEntitiesAtPosition(raylib::Vector2 position);
+
+        double getTime() { return time; }
+        double getDays() { return days; }
+
+        void setTime(double time) { this->time = time; }
+        void setDays(double days) { this->days = days; }
+
+        double getTimeOfDay() { return std::fmod(time, day_length); }
+        double getDayProgress() { return time / day_length; }
+
+        /**
+         * @brief Registers an item to the global item dictionary
+        */
+        void registerItem(Item item) { items[item.getId()] = item; } // TODO: Document literally everything
+        /**
+         * @brief Registers a recipe to the global recipe list 
+         * TODO: Find a way to allow for learned recipes.
+        */
+        void registerRecipe(Recipe recipe) { recipes.push_back(recipe); }
+
+        /**
+         * @brief Get an item by id
+        */
+        Item& getItem(std::string id) { return items[id]; }
+        /**
+         * @brief Get a recipe by index / id
+        */
+        Recipe& getRecipe(int index) { return recipes[index]; }
+
+        std::vector<Recipe>& getRecipes() { return recipes; }
+
+        void loadItems(const char* filename); // Loads items from a json file TODO: Do this.
+        void loadRecipes(const char* filename); // Loads recipes from a json file
 
     private:
+
+        void doEntityVectorModification();
 
         Player* player;
         std::array<std::array<TileType, MAP_WIDTH>, MAP_WIDTH> tiles;
         raylib::Window* window;
         raylib::Camera2D* camera;
         std::vector<Entity*> entities;
+        std::vector<Entity *> entities_to_add;
+        std::vector<Entity *> entities_to_remove;
+
+        std::map<std::string, Item> items; // Global item dictionary
+        std::vector<Recipe> recipes; // Global recipe list
+
+        double time;
+        double days;
+
+        const double day_length = 60.0 * 10.0; // 2 minutes per day
 
 };

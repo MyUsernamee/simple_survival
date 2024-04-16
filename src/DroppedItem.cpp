@@ -1,40 +1,45 @@
-#include "entities/DroppedItem.hpp"
-//TODO: FIMD OUT WHY IT DOESNT POCKUP ALL AT ONCE
+#include "DroppedItem.hpp"
+
+#include "Game.hpp"
+#include "Player.hpp"
+
+DroppedItem::DroppedItem(int x, int y, Item item)
+{
+
+    this->setPosition(raylib::Vector2{static_cast<float>(x), static_cast<float>(y)});
+    this->item = item;
+
+    this->size = raylib::Vector2{static_cast<float>(this->item.getTexture().width), static_cast<float>(this->item.getTexture().height)};
+    
+
+}
+
 void DroppedItem::update(Game *game)
 {
 
-    // We see if the player is close to the item
-    Player* player = game->getPlayer();
-
-    if (player->getPosition().Distance(position) < 50 && IsKeyPressed(KEY_E)) { // TODO: Make this distance a constant and add keyMap
-
-        Item item = this->item.getItem().value();
-        while (this->item.getCount() > 0) {
-
-            this->item.setCount(this->item.getCount() - 1);
-            player->getInventory()->addItem(item);
-
-        }
-        game->removeEntity(this);
-
-    }
-
-    
+    // Do nothing
 
 }
 
 void DroppedItem::render()
 {
 
-    DrawTextureEx(item.getItem().value().getTexture(), {position.x, position.y}, 0, 32 / item.getItem().value().getTexture().width, raylib::Color(255, 255, 255, 255));
+    DrawTextureEx(item.getTexture(), raylib::Vector2{position.x - size.x / 2, position.y - size.y / 2}, 0, 1, WHITE);
 
 }
 
-DroppedItem::DroppedItem(Slot item, raylib::Vector3 position, raylib::Vector3 velocity)
+void DroppedItem::onCollision(Game* game, Entity *entity)
 {
 
-    this->item = item;
-    this->position = position;
-    this->velocity = velocity;
+    if (entity == game->getPlayer())
+    {
+
+        // Add the item to the player's inventory
+        game->getPlayer()->getInventory()->addItem(item);
+
+        // Remove the entity from the game
+        game->removeEntity(this);
+
+    }
 
 }

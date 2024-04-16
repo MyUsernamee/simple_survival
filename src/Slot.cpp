@@ -31,7 +31,7 @@ bool Slot::remove(int count)
 void Slot::render(int x, int y, int width, int height)
 {
 
-    DrawRectangle(static_cast<float>(x), static_cast<float>(y), static_cast<float>(width), static_cast<float>(height), SLOT_BG_COLOR);
+    DrawRectangle(static_cast<float>(x), static_cast<float>(y), static_cast<float>(width), static_cast<float>(height), UI_BG_COLOR);
 
     if(item.has_value())
     {
@@ -40,6 +40,12 @@ void Slot::render(int x, int y, int width, int height)
 
         Texture2D item_texture = item.value().getTexture();
         DrawTextureEx(item_texture, {static_cast<float>(x), static_cast<float>(y)}, 0, (static_cast<float>(width) / item_texture.width), WHITE);
+        
+        // If it doesn't have a texture, draw a placeholder
+        if(item_texture.id == 0)
+        {
+            DrawText("?", x + width / 2 - MeasureText("?", height) / 2, y + height / 2 - height / 4, height / 2, WHITE);
+        }
 
         std::string count_str = std::to_string(count);
 
@@ -49,7 +55,39 @@ void Slot::render(int x, int y, int width, int height)
 
     }
 
-    DrawRectangleLines(x, y, width, height, SLOT_BORDER_COLOR);
+    DrawRectangleLines(x, y, width, height, UI_BORDER_COLOR);
+
+}
+
+void Slot::renderTooltip(int x, int y, int width, int height)
+{
+
+    DrawRectangle(static_cast<float>(x), static_cast<float>(y), static_cast<float>(width), static_cast<float>(height), BLACK);
+
+    if(item.has_value())
+    {
+        
+
+        DrawText(item.value().getName().c_str(), x + 2, y + 2, height / 4, WHITE);
+        DrawText(item.value().getDescription().value_or("No Description").c_str(), x + 2, y + 2 + height / 4, height / 4, WHITE);
+
+    }
+
+    DrawRectangleLines(x, y, width, height, WHITE);
+    
+}
+
+void Slot::render(int x, int y, int width, int height, raylib::Vector2 mouse_position)
+{
+
+    render (x, y, width, height);
+
+    if(mouse_position.x >= x && mouse_position.x <= x + width && mouse_position.y >= y && mouse_position.y <= y + height)
+    {
+
+        renderTooltip(x, y, width, height); // TODO: Add this to every slot somehow.
+
+    }
 
 }
 
@@ -57,4 +95,12 @@ Slot::Slot()
 {
     item = std::nullopt;
     count = 0;
+}
+
+Slot::Slot(std::optional<Item> item, int count)
+{
+
+    this->item = item;
+    this->count = count;
+
 }

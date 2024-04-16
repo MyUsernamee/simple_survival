@@ -3,9 +3,7 @@
 #include <optional>
 
 #include "Item.hpp"
-
-const Color SLOT_BG_COLOR = GRAY;
-const Color SLOT_BORDER_COLOR = DARKGRAY;
+#include "Colors.hpp"
 
 const int SLOT_MAX_COUNT = 64;
 
@@ -16,6 +14,7 @@ class Slot {
     public:
 
         Slot();
+        Slot(std::optional<Item> item, int count = 1);
 
         std::optional<Item> getItem() { return item; }
         int getCount() { return count; }
@@ -41,8 +40,13 @@ class Slot {
          * @brief Render the slot at the given position.
          * 
          * Mostly for debugging purposes, but might have a more flushed out use later.
+        */ 
+        void render(int x, int y, int width, int height);
+        void renderTooltip(int x, int y, int width, int height);
+        /**
+         * @brief Render the slot at the given position.
         */
-        void render(int x, int y, int width, int height); // TODO: Add a hover effect for the slot to show more data. Render item amount and count.
+        void render(int x, int y, int width, int height, raylib::Vector2 mouse_position);
 
     private:
 
